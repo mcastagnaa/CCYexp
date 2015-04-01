@@ -1,0 +1,16 @@
+{
+    "contents" : "library(ggplot2)\n\nrm(list = ls())\nload(\"DataSet.Rda\")\n\nRawData$Date <- as.Date(RawData$Date)\nLastDate <- max(RawData$Date, na.rm=TRUE)\nLast6mRaw <- RawData[RawData$Date > \n                       as.Date(as.yearmon(LastDate) - 0.5, frac = 1) & \n                       (!is.na(RawData$CCYExposure)),]\nLast6mRaw$FundCode <- factor(Last6mRaw$FundCode)\n\nFundsNo <- levels(Last6mRaw$FundCode)\nFundCounts <- as.data.frame(sapply(split(Last6mRaw$FundCode, Last6mRaw$Date), \n                                   function(x) length(unique(x))))\nFundDatesCounts <- as.data.frame(sapply(split(Last6mRaw$Date, Last6mRaw$FundCode), \n                                        function(x) length(unique(x))))\n\nRanges <- as.data.frame(t(sapply(split(Last6mRaw$CCYExposure, Last6mRaw$FundCode), \n                                 range)))\ncolnames(Ranges) <- c(\"Min\", \"Max\")\nRanges$Range <- Ranges$Max-Ranges$Min\n\nFOUNDsub <- which(rownames(Ranges) %in% \n                    subset(rownames(Ranges), \n                           subset = grepl(glob2rx(\"FOUND*\"), \n                                          rownames(Ranges))))\nthreshold <- 0.1\nFundsOverThresh <- Ranges[Ranges$Range > threshold &\n                            !rownames(Ranges) %in% rownames(Ranges)[FOUNDsub],]\n\nFundsOverThresh <- FundsOverThresh[order(-FundsOverThresh$Range),]\n\nPltsData <- Last6mRaw[Last6mRaw$FundCode %in% rownames(FundsOverThresh),]\n\nPltsData$FundCode <- factor(PltsData$FundCode)\nlevels(PltsData$FundCode)\n\nggplot()+\n    geom_line(data=PltsData,\n           aes(y=CCYExposure, x = Date, group=FundCode), \n           stat= \"identity\") +\n    facet_grid(FundCode ~ .) + \n    scale_y_continuous(labels =percent)\n\n#########################",
+    "created" : 1427898670423.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1136283238",
+    "id" : "FEB807BD",
+    "lastKnownWriteTime" : 1427900160,
+    "path" : "G:/GitHub/CCYexp/PlotHiRange.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

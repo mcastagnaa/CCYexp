@@ -1,0 +1,16 @@
+{
+    "contents" : "library(RODBC)\nlibrary(zoo)\nlibrary(scales)\n\n#########################################\n#library(xlsx)\n\nsqlFileCon <- file(\"GetRawData.sql\", \"r\")\nsqlString <- gsub(\"\\t\", \" \", paste(readLines(sqlFileCon), collapse=\" \"))\n\nchannel <- odbcConnect(\"SQLServerVivaldi\")\nRawData <- as.data.frame(sqlQuery(channel, sqlString))\nclose(channel)\n\nsave(RawData, file = \"DataSet.Rda\")\n\n##########################################\n\n",
+    "created" : 1427879535574.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1553130464",
+    "id" : "1BA38331",
+    "lastKnownWriteTime" : 1427900174,
+    "path" : "G:/GitHub/CCYexp/CreateDataset.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
