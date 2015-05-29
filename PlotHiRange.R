@@ -1,4 +1,6 @@
 library(ggplot2)
+library(zoo)
+library(scales)
 
 rm(list = ls())
 load("DataSet.Rda")
@@ -43,4 +45,3 @@ ggplot()+
     facet_grid(FundCode ~ .) + 
     scale_y_continuous(labels =percent)
 
-#########################

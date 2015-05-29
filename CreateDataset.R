@@ -1,6 +1,4 @@
 library(RODBC)
-library(zoo)
-library(scales)
 
 #########################################
 #library(xlsx)
