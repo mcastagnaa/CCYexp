@@ -1,0 +1,16 @@
+{
+    "contents" : "library(lattice)\n\nxyplot(CCYExposure ~ Date|factor(FundCode), \n       data = PltsData,\n       panel = function(x,y) {\n         panel.grid(h=-1, v=2)\n         I1 <- order(x)\n         llines(x[I1], y[I1], col=1)\n       })",
+    "created" : 1427963286972.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2553322641",
+    "id" : "CE6DFD6C",
+    "lastKnownWriteTime" : 1427963653,
+    "path" : "G:/GitHub/CCYexp/PlotHiRangeLattice.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
